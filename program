@@ -1,0 +1,16 @@
+def parse_fastq(file_path): #parse a fastq file and return the number of reads
+    with open(file_path, 'r') as file1:
+        num_reads = sum(1 for line in file1 if line.startswith('@'))
+    return num_reads
+
+def estimate_genome_size(num_unique_kmers, kmer_size, coverage): #estimate size of genome after looking at the number of kmers, kmer size, and coverage
+    estimated_genome_size = num_unique_kmers * kmer_size / coverage
+    return estimated_genome_size
+
+
+
+
+
+
+
+python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size ___ --max_kmer_size ___ --output_prefix myoutput
