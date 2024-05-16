@@ -8,7 +8,8 @@ Our project in lab 2 involves developing a Python script similar to KmerGenie. I
 <a name="prerequisites"></a>
 ##Prerequisites
 'kmerdemon' requires the following libraries from Python, to be successful
-
+  - argparse
+  - 
 
 <
 
