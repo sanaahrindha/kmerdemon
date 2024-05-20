@@ -10,6 +10,26 @@ def estimate_genome_size(num_unique_kmers, kmer_size, coverage): #estimate size 
     estimated_genome_size = num_unique_kmers * kmer_size / coverage
     return estimated_genome_size
 
+def main_function():
+    parser = argparse.ArgumentParser(description="Tool to estimate optimal genome and k-mer size" #tool description 
+    parser.add.argument("input files", nargs="+", help="Input FASTQ files") #input file(s)
+    parser.add.argument("--min_kmer_size", type=int, default=15, help="Minimum k-mer length for analysis") #optional, default set
+    parser.add.argument("--max_kmer_size", type=int, default=120, help="Maximum k-mer length for analysis") #optional, default set
+    parser.add.argument("--output_prefix", default="output", help="Prefix for output files") #optional, idk if needed
+    args = parser.parse_args() #process arguments
+
+    num_reads = 0
+    for file_path in args.input_files:
+        num_reads += parse_fastq(file_path) #parse input files 
+
+
+    
+    
+
+    
+
+
+
 
 
 
