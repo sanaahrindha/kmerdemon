@@ -18,8 +18,9 @@ def make_kmers(read, kmer_size):
 
 
 
-def abundance_histograms(parsed_file, threshold, size): #given parsed file from parse_fastq() create subset of reads to analyze
+def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq() create subset of reads to analyze
     reads = []
+    kmer_frequencies = {}
     with open(parsed_file, "r") as file1:
         lines = file1.readlines()
         for line in lines:
@@ -28,14 +29,18 @@ def abundance_histograms(parsed_file, threshold, size): #given parsed file from 
                 reads.append(line) 
     for read in reads:
         kmers = make_kmers(read, size)
-    
+        for kmer in kmers:
+            if kmer not in kmer_frequencies:
+                kmer_frequencies[kmer] = 1
+            else: 
+                kmer_frequencies[kmer] += 1    
 
 def estimate_genome_size(num_unique_kmers, kmer_size, coverage): #estimate size of genome after looking at the number of kmers, kmer size, and coverage
     estimated_genome_size = num_unique_kmers * kmer_size / coverage
     return estimated_genome_size
 
 def main_function():
-    parser = argparse.ArgumentParser(description="Tool to estimate optimal genome and k-mer size" #tool description 
+    parser = argparse.ArgumentParser(description=)"Tool to estimate optimal genome and k-mer size" #tool description 
     parser.add.argument("input files", nargs="+", help="Input FASTQ files") #input file(s)
     parser.add.argument("--min_kmer_size", type=int, default=15, help="Minimum k-mer length for analysis") #optional, default set
     parser.add.argument("--max_kmer_size", type=int, default=120, help="Maximum k-mer length for analysis") #optional, default set
