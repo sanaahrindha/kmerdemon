@@ -10,3 +10,19 @@ Our project develops a Python script similar to KmerGenie. It estimates optimal 
 - argparse
 - random
 
+Packages can be imported in Python
+
+<a name="install"></a>
+## Installation
+To install 'kmerdemon', the following commands will be helpful
+
+*add commands*
+
+<a name="usage"></a>
+## Basic Usage
+
+To use 'kmerdemon' the basic format is below
+
+
+
+
