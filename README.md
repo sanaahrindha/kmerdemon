@@ -26,6 +26,9 @@ To install `kmerdemon`, the following commands will be helpful
 ## Basic Usage
 
 To use `kmerdemon` the basic format is below
+```
+*FILL IN* kmerdemon [xyx]
+```
 
 
 
