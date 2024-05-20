@@ -16,4 +16,4 @@ def estimate_genome_size(num_unique_kmers, kmer_size, coverage): #estimate size 
 
 
 
-python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size ___ --max_kmer_size ___ --output_prefix myoutput
+python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
