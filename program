@@ -1,7 +1,10 @@
-def parse_fastq(file_path): #parse a fastq file and return the number of reads
-    with open(file_path, 'r') as file1:
+def parse_fastq(file_path, out_file): #parse a fastq file and return the number of reads
+    with open(file_path, 'r') as file1, open(out_file, "w") as file2:
         num_reads = sum(1 for line in file1 if line.startswith('@'))
     return num_reads
+
+def abundance_histograms():
+    
 
 def estimate_genome_size(num_unique_kmers, kmer_size, coverage): #estimate size of genome after looking at the number of kmers, kmer size, and coverage
     estimated_genome_size = num_unique_kmers * kmer_size / coverage
