@@ -9,11 +9,13 @@ Our project develops a Python script similar to KmerGenie. It estimates optimal 
 `kmerdemon` requires the following python libraries to be installed:
 - argparse
 - random
+- matplotlib
 
 Packages can be imported in Python
 ```
 import argparse
 import random
+import matplotlib.pyplot as plt
 ```
 
 <a name="install"></a>
