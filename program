@@ -1,5 +1,6 @@
 import argparse
 import random
+import matplotlib.pyplot as plt
 
 def parse_fastq(file_path, out_file): #parse a fastq file and return the number of reads and write reads to output file
     with open(file_path, 'r') as file1, open(out_file, "w") as file2:
