@@ -64,15 +64,18 @@ def main_function():
     increment = int((args.max_kmer_size - args.min_kmer_size)/10)
     kmer_frequencies_by_size = {}
     # get abundance data for each kmer size in range from min to max, add to dictionary
-    for kmer_size in range(args.min_kmer_size, args.max_kmer_size, increment):
-        kmer_frequencies_by_size[kmer_size] = abundance("{file_path}_parsed.txt",args.kmer_sampling_proportion,kmer_size)
-    
+    # keep track of optimal kmer length
     max_unique_kmers = 0
     optimal_kmer_length = -1
-    for size, dictionary in kmer_frequencies_by_size.items():
-        if len(dictionary) > max_unique_kmers:
-            max_unique_kmers = len(dictionary)
-            optimal_kmer_length = size
+    for kmer_size in range(args.min_kmer_size, args.max_kmer_size, increment):
+        kmer_frequencies_by_size[kmer_size] = abundance("{file_path}_parsed.txt",args.kmer_sampling_proportion,kmer_size)
+        if len(kmer_frequencies_by_size[kmer_size]) > max_unique_kmers:
+            max_unique_kmers = len(kmer_frequencies_by_size[kmer_size])
+            optimal_kmer_length = kmer_size
+
+    for kmer_size in range(optimal_kmer_length-5, optimal_kmer_length+5, 2):
+            
+
     #still need to perform analysis/estimate size
 
         output_file = f"{args.output_prefix}_kmer_{kmer_size}.txt"
