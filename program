@@ -42,7 +42,6 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
                 kmer_frequencies[kmer] = 1
             else: 
                 kmer_frequencies[kmer] += 1
-    #print(kmer_frequencies)
     print(len(kmer_frequencies))
     return kmer_frequencies 
 
@@ -61,8 +60,20 @@ def main_function():
 
     num_reads = 0
     for file_path in args.input_files:
-        num_reads += parse_fastq(file_path) #parse input files 
+        num_reads += parse_fastq(file_path, "{file_path}_parsed.txt") #parse input files 
 
+    increment = int((args.max_kmer_size - args.min_kmer_size)/10)
+    kmer_frequencies_by_size = {}
+    # get abundance data for each kmer size in range from min to max, add to dictionary
+    for kmer_size in range(args.min_kmer_size, args.max_kmer_size, increment):
+        kmer_frequencies_by_size[kmer_size] = abundance("{file_path}_parsed.txt",args.kmer_sampling_proportion,kmer_size)
+    
+    max_unique_kmers = 0
+    optimal_kmer_length = -1
+    for size, dictionary in kmer_frequencies_by_size.items():
+        if len(dictionary) > max_unique_kmers:
+            max_unique_kmers = len(dictionary)
+            optimal_kmer_length = size
     #still need to perform analysis/estimate size
 
         output_file = f"{args.output_prefix}_kmer_{kmer_size}.txt"
@@ -74,4 +85,4 @@ def main_function():
 
     
 
-python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
+#python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
