@@ -12,9 +12,12 @@ def parse_fastq(file_path, out_file): #parse a fastq file and return the number 
     return num_reads
 
 def make_kmers(read, kmer_size): # returns list of kmers given a read
-    kmers = [len(read)-kmer_size+1]
+    kmers = [0]*(len(read)-kmer_size+1)
+    #print(len(kmers))
     for i in range(len(kmers)):
         kmers[i] = read[i:i+kmer_size]
+    #print(kmers)
+    return kmers
 
 
 def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq() create subset of reads to analyze
@@ -23,26 +26,31 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
     # open file, select proportion of reads to analyze
     with open(parsed_file, "r") as file1:
         lines = file1.readlines()
+        #print(len(lines))
         for line in lines:
             rand = random.random()
             if rand < threshold:
-                reads.append(line) 
+                reads.append(line.strip()) 
     # count frequencies of every kmer in each read
+    #print(len(reads))
     for read in reads:
         kmers = make_kmers(read, size)
+        #print(kmers)
         for kmer in kmers:
             if kmer not in kmer_frequencies:
                 kmer_frequencies[kmer] = 1
             else: 
                 kmer_frequencies[kmer] += 1
-    return kmer_frequencies  
+    #print(kmer_frequencies)
+    print(len(kmer_frequencies))
+    return kmer_frequencies 
 
 def estimate_genome_size(num_unique_kmers, kmer_size, coverage): #estimate size of genome after looking at the number of kmers, kmer size, and coverage
     estimated_genome_size = num_unique_kmers * kmer_size / coverage
     return estimated_genome_size
 
 def main_function():
-    parser = argparse.ArgumentParser(description=)"Tool to estimate optimal genome and k-mer size" #tool description 
+    parser = argparse.ArgumentParser(description="Tool to estimate optimal genome and k-mer size") #tool description 
     parser.add.argument("input files", nargs="+", help="Input FASTQ files") #input file(s)
     parser.add.argument("--min_kmer_size", type=int, default=15, help="Minimum k-mer length for analysis") #optional, default set
     parser.add.argument("--max_kmer_size", type=int, default=120, help="Maximum k-mer length for analysis") #optional, default set
