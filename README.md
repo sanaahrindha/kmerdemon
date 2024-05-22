@@ -29,7 +29,7 @@ To install `kmerdemon`, the following commands will be helpful
 
 To use `kmerdemon` the basic format is below
 ```
-*FILL IN* kmerdemon [xyx]
+python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
 ```
 
 
