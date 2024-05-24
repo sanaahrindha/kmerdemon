@@ -1,6 +1,7 @@
 import argparse
 import random
 import matplotlib.pyplot as plt
+from collections import defaultdict
 
 def parse_fastq(file_path, out_file): #parse a fastq file and return the number of reads and write reads to output file
     with open(file_path, 'r') as file1, open(out_file, "w") as file2:
@@ -48,6 +49,29 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
 def estimate_genome_size(num_unique_kmers, kmer_size, coverage): #estimate size of genome after looking at the number of kmers, kmer size, and coverage
     estimated_genome_size = num_unique_kmers * kmer_size / coverage
     return estimated_genome_size
+
+
+def create_histogram(kmer_counts, k):
+    histogram = defaultdict(int)
+    for count in kmer_counts.values():
+        histogram[count] += 1
+    plot_histogram(histogram, k)
+    
+def plot_histogram(histogram, k):                   # This should be fine for now, after inspecting the output may change to incorporate Gaussian KDE /redline
+    abundances = sorted(histogram.keys())
+    frequencies = [histogram[a] for a in abundances]
+    plt.figure(figsize=(10,6))
+    plt.bar(abundances, frequencies, width=1.0, edgecolor="black")
+    plt.xlabel('K-mer Abundance')
+    plt.ylabel('Frequency')
+    plt.title(f'K-mer Abundance Histogram for k={k}')
+    plt.yscale('log')
+    plt.savefig(f'kmer_histogram_k{k}.png')
+    plt.close()
+
+def predict_best_k(histograms):
+    best_k = max(histograms, key=lambda k: sum(histograms[k].values()))
+    return best_k
 
 def main_function():
     parser = argparse.ArgumentParser(description="Tool to estimate optimal genome and k-mer size") #tool description 
