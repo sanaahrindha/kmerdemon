@@ -73,6 +73,19 @@ def predict_best_k(histograms):
     best_k = max(histograms, key=lambda k: sum(histograms[k].values()))
     return best_k
 
+"""
+def predict_best_k(histograms):
+    best_k = None
+    max_unique_kmers = 0
+    for k, histogram in histograms.items():
+        unique_kmers = sum(histogram.values())
+        if unique_kmers > max_unique_kmers:
+            max_unique_kmers = unique_kmers
+            best_k = k
+    return best_k
+"""
+
+
 def main_function():
     parser = argparse.ArgumentParser(description="Tool to estimate optimal genome and k-mer size") #tool description 
     parser.add.argument("input files", nargs="+", help="Input FASTQ files") #input file(s)
