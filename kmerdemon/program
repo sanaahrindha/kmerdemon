@@ -124,7 +124,7 @@ def main_function():
             output_file.write(f"Estimated Genome Size: {estimated_genome_size}\n")
 
 if __name__ == "__main__":
-    main()
+    main_function()
     
 
 #python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
