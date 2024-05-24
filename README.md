@@ -10,12 +10,14 @@ Our project develops a Python script similar to KmerGenie. It estimates optimal 
 - argparse
 - random
 - matplotlib
+- defaultdict
 
 Packages can be imported in Python
 ```
 import argparse
 import random
 import matplotlib.pyplot as plt
+from collections import defaultdict
 ```
 
 <a name="install"></a>
