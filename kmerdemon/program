@@ -136,7 +136,25 @@ def create_histogram(kmer_counts, k):
         histogram[count] += 1
     plot_histogram(histogram, k)
     
-def plot_histogram(histogram, k):                   # This should be fine for now, after inspecting the output may change to incorporate Gaussian KDE /redline
+def plot_histogram(histogram, k):     
+    """
+    Using matplotlib, plots histogram dict with a k value
+
+    Parameters
+    ----------
+    histogram : dictionary of dictionaries
+        kmer length as keys and dictionaries as values
+        for values: kmer strings as keys and counts of kmers as values
+
+    k : int
+        kmer size for which the histogram is being plotted
+
+    Outputs
+    -------
+    Graph : plt
+        creates the histogram with all required elements and saves it
+        as a png to your directory
+    """              
     abundances = sorted(histogram.keys())
     frequencies = [histogram[a] for a in abundances]
     plt.figure(figsize=(10,6))
