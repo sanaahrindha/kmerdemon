@@ -33,6 +33,26 @@ pip install . # For user installation, add --user
 <a name="usage"></a>
 ## Basic Usage
 
+```bash
+usage: kmerdemon [-h] [-o FILE] [-l int] [-k int] [-e float] input_files [input_files ...]
+
+Tool to estimate optimal genome and k-mer size
+
+positional arguments:
+  input_files           Input FASTQ files
+
+options:
+  -h, --help            show this help message and exit
+  -o FILE, --out FILE   Prefix for output files.Default: output
+  -l int, --min_kmer_size int
+                        Minimum k-mer length for analysis
+  -k int, --max_kmer_size int
+                        Maximum k-mer length for analysis
+  -e float, --kmer_sampling_proportion float
+                        Proportion of k-mers to sample
+```
+
+
 To use `kmerdemon` the basic format is below
 ```
 python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
