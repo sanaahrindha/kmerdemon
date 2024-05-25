@@ -148,7 +148,6 @@ def plot_histogram(histogram, k):                   # This should be fine for no
     plt.savefig(f'kmer_histogram_k{k}.png')
     plt.close()
 
-# iterate through dictionaries output by abundance(), calculate optimal kmer size based on number of unique kmers (dictioary length)
 def predict_best_k(histograms):
     """
     Gets the best kmer length given the abundance information for different kmer lengths
@@ -232,7 +231,7 @@ def main():
 
     #still need to perform analysis/estimate size
 
-        output_file = f"{args.output_prefix}_kmer_{kmer_size}.txt"
+        output_file = f"{output_prefix}_kmer_{kmer_size}.txt"
         with open(output_file, 'w') as output_file:
             output_file.write(f"K-mer Size: {kmer_size}\n")
             output_file.write(f"Number of Unique K-mers: {num_unique_kmers}\n")
