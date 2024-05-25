@@ -89,12 +89,23 @@ def predict_best_k(histograms):
 
 def main():
     parser = argparse.ArgumentParser(prog="kmerdemon", description="Tool to estimate optimal genome and k-mer size") #tool description 
-    parser.add_argument("input files", nargs="+", help="Input FASTQ files") #input file(s)
-    parser.add_argument("--min_kmer_size", type=int, default=15, help="Minimum k-mer length for analysis") #optional, default set
-    parser.add_argument("--max_kmer_size", type=int, default=120, help="Maximum k-mer length for analysis") #optional, default set
-    parser.add_argument("--kmer_sampling_proportion", type=float, default=0.1, help="Proportion of k-mers to sample") #optional, default set
-    parser.add_argument("--output_prefix", default="output", help="Prefix for output files") #optional, idk if needed
+    
+    #Input 
+    parser.add_argument("input_files", nargs="+", help="Input FASTQ files") #input file(s)
+    
+    #Output
+    parser.add_argument("-o", "--out", default="output", help="Prefix for output files." "Default: output", metavar="FILE", type=str, required=False)
+
+    #Options
+    parser.add_argument("-l","--min_kmer_size", type=int, default=15, help="Minimum k-mer length for analysis", metavar="int", required=False) #optional, default set
+    parser.add_argument("-k","--max_kmer_size", type=int, default=121, help="Maximum k-mer length for analysis", metavar="int", required=False) #optional, default set
+    parser.add_argument("-e","--kmer_sampling_proportion", type=float, default=0.01, help="Proportion of k-mers to sample", metavar="float", required=False) #optional, default set
+    
+    #Parse args
     args = parser.parse_args() #process arguments
+
+
+
 
     num_reads = 0
     for file_path in args.input_files:
