@@ -24,7 +24,11 @@ from collections import defaultdict
 ## Installation
 To install `kmerdemon`, the following commands will be helpful
 
-*add commands*
+```bash
+git clone https://github.com/sanaahrindha/kmerdemon.git
+pip install -r requirements.txt
+pip install . # For user installation, add --user
+```
 
 <a name="usage"></a>
 ## Basic Usage
