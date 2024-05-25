@@ -7,10 +7,8 @@ Our project develops a Python script similar to KmerGenie. It estimates optimal 
 <a name="prerequisites"></a>
 ## Prerequisites
 `kmerdemon` requires the following python libraries to be installed:
-- argparse
-- random
+- setuptools
 - matplotlib
-- defaultdict
 
 Packages can be imported in Python
 ```
