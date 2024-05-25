@@ -224,19 +224,24 @@ def main():
     num_unique_kmers = len(kmer_frequencies_by_size[optimal_kmer_length])
 
     if increment != 1:
-        kmer_frequences_by_size_better = {}
+        kmer_frequencies_by_size_better = {}
         for kmer_size in range(optimal_kmer_length-5, optimal_kmer_length+5, 2):
-            kmer_frequencies_by_size[kmer_size] = abundance("{file_path}_parsed.txt",sampling_proportion,kmer_size)
+            kmer_frequencies_by_size_better[kmer_size] = abundance(output_file,sampling_proportion,kmer_size)
+        optimal_kmer_length = predict_best_k(kmer_frequencies_by_size_better)
+        num_unique_kmers = len(kmer_frequencies_by_size_better[optimal_kmer_length])
+
+    print("Optimal k-mer length: ",optimal_kmer_length)
+    print("Number of Unique k-mers: ",num_unique_kmers)
         
 
     #still need to perform analysis/estimate size
-
+'''
         output_file = f"{output_prefix}_kmer_{kmer_size}.txt"
         with open(output_file, 'w') as output_file:
             output_file.write(f"K-mer Size: {kmer_size}\n")
             output_file.write(f"Number of Unique K-mers: {num_unique_kmers}\n")
             output_file.write(f"Estimated Genome Size: {estimated_genome_size}\n")
-
+'''
             
 
 if __name__ == "__main__":
