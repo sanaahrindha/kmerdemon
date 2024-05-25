@@ -114,7 +114,7 @@ def main_function():
     
     #Parse args
     args = parser.parse_args() #process arguments
-    
+
     files = args.input
     min_kmer_size = args.min_kmer_size
     max_kmer_size = args.max_kmer_size
@@ -126,6 +126,9 @@ def main_function():
 
     if sampling_proportion <= 0 or sampling_proportion > 1:
         parser.error("Sampling proportion must be in the range (0,1]")
+
+    if len(files) == 0 or len(files) > 2:
+        parser.error("Requires 1 or 2 input files")
 
     num_reads = 0
     for file_path in files:
@@ -143,11 +146,13 @@ def main_function():
     num_unique_kmers = 0
     optimal_kmer_length = -1
     for kmer_size in range(min_kmer_size, max_kmer_size, increment):
-        kmer_frequencies_by_size[kmer_size] = abundance("{file_path}_parsed.txt",sampling_proportion,kmer_size)
+        kmer_frequencies_by_size[kmer_size] = abundance(output_file,sampling_proportion,kmer_size)
     num_unique_kmers = predict_best_k(kmer_frequencies_by_size)
 
     if increment != 1:
+        kmer_frequences_by_size_better = {}
         for kmer_size in range(optimal_kmer_length-5, optimal_kmer_length+5, 2):
+            kmer_frequencies_by_size[kmer_size] = abundance("{file_path}_parsed.txt",sampling_proportion,kmer_size)
         
 
     #still need to perform analysis/estimate size
@@ -158,46 +163,11 @@ def main_function():
             output_file.write(f"Number of Unique K-mers: {num_unique_kmers}\n")
             output_file.write(f"Estimated Genome Size: {estimated_genome_size}\n")
 
+            
+
 if __name__ == "__main__":
     main_function()
     
 
 #python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
 
-
-
-def main():
-
-
-
-
-
-    num_reads = 0
-    for file_path in args.input_files:
-        num_reads += parse_fastq(file_path, "{file_path}_parsed.txt") #parse input files 
-
-    increment = int((args.max_kmer_size - args.min_kmer_size)/10)
-    kmer_frequencies_by_size = {}
-    # get abundance data for each kmer size in range from min to max, add to dictionary
-    # keep track of optimal kmer length
-    max_unique_kmers = 0
-    optimal_kmer_length = -1
-    for kmer_size in range(args.min_kmer_size, args.max_kmer_size, increment):
-        kmer_frequencies_by_size[kmer_size] = abundance("{file_path}_parsed.txt",args.kmer_sampling_proportion,kmer_size)
-        if len(kmer_frequencies_by_size[kmer_size]) > max_unique_kmers:
-            max_unique_kmers = len(kmer_frequencies_by_size[kmer_size])
-            optimal_kmer_length = kmer_size
-
-    for kmer_size in range(optimal_kmer_length-5, optimal_kmer_length+5, 2):
-            
-
-    #still need to perform analysis/estimate size
-
-        output_file = f"{args.output_prefix}_kmer_{kmer_size}.txt"
-        with open(output_file, 'w') as output_file:
-            output_file.write(f"K-mer Size: {kmer_size}\n")
-            output_file.write(f"Number of Unique K-mers: {num_unique_kmers}\n")
-            output_file.write(f"Estimated Genome Size: {estimated_genome_size}\n")
-
-if __name__ == "__main__":
-    main()
