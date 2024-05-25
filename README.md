@@ -34,12 +34,3 @@ To use `kmerdemon` the basic format is below
 python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
 ```
 
-
-
-- parse_fastq(): parses input file and outputs number of reads and writes reads to output file
-- make_kmers(): given an input read and kmer size outputs a list of all kmers in the read
-- abundance(): given a list of reads, selects a subset of reads for analysis and calculates raw abundance for each kmer in each read
-- optimize(): find optimal kmer length given an input list of adundance data
-- make_histogram(): given a dictionary of reads and their associates abundances, plot a histogram of unique kmers
-- estimate_genome_size(): from analysis and input data, estimate genome size
-
