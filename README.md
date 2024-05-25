@@ -51,8 +51,4 @@ options:
 ```
 
 
-To use `kmerdemon` the basic format is below
-```
-python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
-```
 
