@@ -24,6 +24,7 @@ To install `kmerdemon`, the following commands will be helpful
 
 ```bash
 git clone https://github.com/sanaahrindha/kmerdemon.git
+cd kmerdemon
 pip install -r requirements.txt
 pip install . # For user installation, add --user
 ```
