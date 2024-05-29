@@ -11,7 +11,7 @@ setup(
     packages=find_packages(),
     entry_points={  
         "console_scripts": [
-            "kmerdemon=kmerdemon.program:main",
+            "kmerdemon=kmerdemon.program.py:main",
         ],
     },
     install_requires=[
