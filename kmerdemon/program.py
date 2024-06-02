@@ -28,7 +28,8 @@ def parse_fastq(file_path, out_file): #parse a fastq file and return the number 
             if line.startswith('@'):
                 file2.write(line[1:])
                 num_reads += 1
-    return num_reads
+                read_length = len(line)
+    return num_reads, read_length
 
 def make_kmers(read, kmer_size):
     """
@@ -90,8 +91,7 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
                 kmer_frequencies[kmer] = 1
             else: 
                 kmer_frequencies[kmer] += 1
-    read_length = len(read)
-    return kmer_frequencies, read_length
+    return kmer_frequencies
 
 def estimate_genome_size(num_unique_kmers, kmer_size, coverage):
     """
