@@ -210,7 +210,7 @@ def main():
     min_kmer_size = args.min_kmer_size
     max_kmer_size = args.max_kmer_size
     sampling_proportion = args.kmer_sampling_proportion
-    output_prefix = args.output_prefix
+    output_prefix = args.out
 
     if min_kmer_size < 5:
         parser.error("Minimum k-mer size cannot be less than 5")
