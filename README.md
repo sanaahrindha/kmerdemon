@@ -33,7 +33,7 @@ pip install . # For user installation, add --user
 ## Basic Usage
 
 ```bash
-usage: kmerdemon [-h] [-o FILE] [-l int] [-k int] [-e float] input_files [input_files ...]
+usage: kmerdemon [-h] [-o FILE] [-l int] [-k int] [-e float] input_files 
 
 Tool to estimate optimal genome and k-mer size
 

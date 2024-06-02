@@ -207,11 +207,8 @@ def main():
     args = parser.parse_args() #process arguments
 
     files = args.input_files
-    print(files)
     min_kmer_size = args.min_kmer_size
-    print(min_kmer_size)
     max_kmer_size = args.max_kmer_size
-    print(max_kmer_size)
     sampling_proportion = args.kmer_sampling_proportion
     output_prefix = args.out
 
@@ -226,7 +223,6 @@ def main():
 
     num_reads = 0
     for file_path in files:
-        print(file_path)
         if not os.path.exists(file_path):
             parser.error("File does not exist")
         file_name = os.path.basename(file_path)
