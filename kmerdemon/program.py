@@ -251,15 +251,11 @@ def main():
     print("Optimal k-mer length: ",optimal_kmer_length)
     print("Number of Unique k-mers: ",num_unique_kmers)
         
-
-    #still need to perform analysis/estimate size
-'''
-        output_file = f"{output_prefix}_kmer_{kmer_size}.txt"
-        with open(output_file, 'w') as output_file:
-            output_file.write(f"K-mer Size: {kmer_size}\n")
-            output_file.write(f"Number of Unique K-mers: {num_unique_kmers}\n")
-            output_file.write(f"Estimated Genome Size: {estimated_genome_size}\n")
-'''
+    output_file = f"{output_prefix}_kmer_{kmer_size}.txt"
+    with open(output_file, 'w') as output_file:
+        output_file.write(f"K-mer Size: {kmer_size}\n")
+        output_file.write(f"Number of Unique K-mers: {num_unique_kmers}\n")
+        output_file.write(f"Estimated Genome Size: {estimated_genome_size}\n")
             
 
 if __name__ == "__main__":
