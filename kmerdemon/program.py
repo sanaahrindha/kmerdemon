@@ -206,7 +206,7 @@ def main():
     #Parse args
     args = parser.parse_args() #process arguments
 
-    files = args.input
+    files = args.input_files
     min_kmer_size = args.min_kmer_size
     max_kmer_size = args.max_kmer_size
     sampling_proportion = args.kmer_sampling_proportion
