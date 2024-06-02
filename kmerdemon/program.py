@@ -223,6 +223,7 @@ def main():
 
     num_reads = 0
     for file_path in files:
+        print(file_path)
         if not os.path.exists(file_path):
             parser.error("File does not exist")
         file_name = os.path.basename(file_path)
