@@ -93,7 +93,7 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
                 kmer_frequencies[kmer] += 1
     return kmer_frequencies
 
-def estimate_genome_size(num_unique_kmers, kmer_size, coverage):
+def estimate_genome_size(num_unique_kmers, kmer_size):
     """
     Estimates genome size based on optimal number of unique kmers
 
