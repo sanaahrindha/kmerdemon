@@ -207,8 +207,11 @@ def main():
     args = parser.parse_args() #process arguments
 
     files = args.input_files
+    print(files)
     min_kmer_size = args.min_kmer_size
+    print(min_kmer_size)
     max_kmer_size = args.max_kmer_size
+    print(max_kmer_size)
     sampling_proportion = args.kmer_sampling_proportion
     output_prefix = args.out
 
