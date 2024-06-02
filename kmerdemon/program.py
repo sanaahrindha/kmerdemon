@@ -223,6 +223,8 @@ def main():
 
     num_reads = 0
     for file_path in files:
+        if not os.path.exists(file_path):
+            parser.error("File does not exist")
         file_name = os.path.basename(file_path)
         file_prefix, _ = os.path.splitext(file_name)
         output_file = f"{file_prefix}_parsed.txt"
