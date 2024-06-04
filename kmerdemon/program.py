@@ -114,10 +114,8 @@ def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
         estimated genome size
     """ 
     num_kmers = defaultdict(int)
-    print(distribution)
     for value in distribution.values():
         num_kmers[value] += 1
-    print(num_kmers)
     num_total_kmers = 0
     valley = 0
     i = 1
