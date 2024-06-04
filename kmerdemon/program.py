@@ -94,7 +94,7 @@ def make_kmers(read, kmer_size):
     return kmers
 
 
-def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq() create subset of reads to analyze
+def abundance(reads, size): #given parsed file from parse_fastq() create subset of reads to analyze
     """
     Creates an abundance dictionary for all the kmers of specified size for a sample of the reads of the input file
 
@@ -114,21 +114,26 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
     kmer_frequences : dictionary
         kmer strings as keys and counts of kmers as values
     """
-    reads = []
-    kmer_frequencies = defaultdict(int)
+    '''reads = []
+    
     with open(parsed_file, "r") as file1:
         #lines = file1.readlines()
         for line in file1:
             rand = random.random()
             if rand < threshold:
                 reads.append(line.strip()) 
+                '''
+    kmer_frequencies = {}
     for read in reads:
         #if (len(read)<size):
             #raise ValueError("Maximum k-mer size cannot be larger than the length of the reads")
         if len(read) >= size:
             kmers = make_kmers(read, size)
             for kmer in kmers:
-               kmer_frequencies[kmer] += 1
+                if kmer not in kmer_frequencies:
+                    kmer_frequencies[kmer] = 1
+                else: 
+                    kmer_frequencies[kmer] += 1
     return kmer_frequencies
 
 def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
@@ -303,7 +308,7 @@ def main():
     else:
         if not os.path.exists(files[0]):
             parser.error("File" + files[0] +  "does not exist")
-        if not os.path.exists(files[1]):
+        if not os.path.exists(files[1])
             parser.error("File" + files[1] +  "does not exist")
         file_name = os.path.basename(files[0])
         file_prefix, _ = os.path.splitext(file_name)
@@ -318,8 +323,16 @@ def main():
     # keep track of optimal kmer length
     num_unique_kmers = 0
     optimal_kmer_length = -1
+
+    with open(output_file, "r") as f:
+        sample = []
+        for line in f:
+            rand  = random.random()
+            if rand <= sampling_proportion:
+                sample.append(line)
+
     for kmer_size in range(min_kmer_size, max_kmer_size, increment):
-        kmer_frequencies_by_size[kmer_size] = abundance(output_file,sampling_proportion,kmer_size)
+        kmer_frequencies_by_size[kmer_size] = abundance(sample,kmer_size)
     optimal_kmer_length = predict_best_k(kmer_frequencies_by_size)
     num_unique_kmers = len(kmer_frequencies_by_size[optimal_kmer_length])
     best_distribution = kmer_frequencies_by_size[optimal_kmer_length]
