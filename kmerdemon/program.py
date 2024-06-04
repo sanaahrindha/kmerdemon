@@ -186,8 +186,8 @@ def predict_best_k(histograms):
     for kmer_size, histogram in histograms.items():
         if len(histogram) > max_unique_kmers:
             max_unique_kmers = len(histogram)
-            optimal_kmer_length = kmer_size
-    return optimal_kmer_length
+            optimal_kmer_length, optimal_distribution = kmer_size, histogram
+    return optimal_kmer_length, optimal_distribution
 
 
 def main():
@@ -248,11 +248,8 @@ def main():
         kmer_frequencies_by_size_better = {}
         for kmer_size in range(optimal_kmer_length-5, optimal_kmer_length+5, 2):
             kmer_frequencies_by_size_better[kmer_size] = abundance(output_file,sampling_proportion,kmer_size)
-        optimal_kmer_length = predict_best_k(kmer_frequencies_by_size_better)
+        optimal_kmer_length, best_distribution = predict_best_k(kmer_frequencies_by_size_better)
         num_unique_kmers = len(kmer_frequencies_by_size_better[optimal_kmer_length])
-
-    print("Optimal k-mer length: ",optimal_kmer_length)
-    print("Number of Unique k-mers: ",num_unique_kmers)
 
     estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length)
     output_file = f"{output_prefix}_kmer_{kmer_size}.txt"
