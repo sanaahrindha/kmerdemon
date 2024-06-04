@@ -308,7 +308,7 @@ def main():
     else:
         if not os.path.exists(files[0]):
             parser.error("File" + files[0] +  "does not exist")
-        if not os.path.exists(files[1])
+        if not os.path.exists(files[1]):
             parser.error("File" + files[1] +  "does not exist")
         file_name = os.path.basename(files[0])
         file_prefix, _ = os.path.splitext(file_name)
