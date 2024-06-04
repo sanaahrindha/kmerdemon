@@ -29,7 +29,7 @@ def parse_fastq(file_path, out_file): #parse a fastq file and return the number 
             if i%4 == 1:
             #if line.startswith('@'):
                 file2.write(line[:])
-                print(line)
+                #print(line)
                 num_reads += 1
                 read_length = len(line)
             i += 1
