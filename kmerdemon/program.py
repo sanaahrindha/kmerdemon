@@ -81,6 +81,7 @@ def make_kmers(read, kmer_size):
     kmers : list
         list of strings of every kmer in the input string
     """
+    #if kmer_size > len(read)
     kmers = [0]*(len(read)-kmer_size+1)
     for i in range(len(kmers)):
         kmers[i] = read[i:i+kmer_size]
@@ -116,14 +117,15 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
             if rand < threshold:
                 reads.append(line.strip()) 
     for read in reads:
-        if (len(read)<size):
-            raise ValueError("Maximum k-mer size cannot be larger than the length of the reads")
-        kmers = make_kmers(read, size)
-        for kmer in kmers:
-            if kmer not in kmer_frequencies:
-                kmer_frequencies[kmer] = 1
-            else: 
-                kmer_frequencies[kmer] += 1
+        #if (len(read)<size):
+            #raise ValueError("Maximum k-mer size cannot be larger than the length of the reads")
+        if len(read) >= size:
+            kmers = make_kmers(read, size)
+            for kmer in kmers:
+                if kmer not in kmer_frequencies:
+                    kmer_frequencies[kmer] = 1
+                else: 
+                    kmer_frequencies[kmer] += 1
     return kmer_frequencies
 
 def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
