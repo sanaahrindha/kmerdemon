@@ -257,9 +257,13 @@ def predict_best_k(histograms):
         kmer length that had the most unique kmers
     """    
     max_unique_kmers = 0
+    num_unique_kmers = 0
     for kmer_size, histogram in histograms.items():
-        if len(histogram) > max_unique_kmers:
-            max_unique_kmers = len(histogram)
+        for value in histogram.values():
+            if value > 5:
+                num_unique_kmers += 1
+        if num_unique_kmers > max_unique_kmers:
+            max_unique_kmers = num_unique_kmers
             optimal_kmer_length, optimal_distribution = kmer_size, histogram
     return optimal_kmer_length
 
