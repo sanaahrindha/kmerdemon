@@ -350,6 +350,7 @@ def main():
     optimal_kmer_length, num_unique_kmers = predict_best_k(kmer_frequencies_by_size)
     #num_unique_kmers = len(kmer_frequencies_by_size[optimal_kmer_length])
     best_distribution = kmer_frequencies_by_size[optimal_kmer_length]
+    create_histogram(best_distribution, optimal_kmer_length)
 
     '''if increment != 1:
         kmer_frequencies_by_size_better = {}
