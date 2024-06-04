@@ -115,7 +115,7 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
         kmer strings as keys and counts of kmers as values
     """
     reads = []
-    kmer_frequencies = {}
+    kmer_frequencies = defaultdict(int)
     with open(parsed_file, "r") as file1:
         #lines = file1.readlines()
         for line in file1:
@@ -128,10 +128,7 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
         if len(read) >= size:
             kmers = make_kmers(read, size)
             for kmer in kmers:
-                if kmer not in kmer_frequencies:
-                    kmer_frequencies[kmer] = 1
-                else: 
-                    kmer_frequencies[kmer] += 1
+               kmer_frequencies[kmer] += 1
     return kmer_frequencies
 
 def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
@@ -338,7 +335,7 @@ def main():
     estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length,best_distribution)
     output_file = f"{output_prefix}_kmer_{kmer_size}.txt"
     with open(output_file, 'w') as output_file:
-        output_file.write(f"K-mer Size: {kmer_size}\n")
+        output_file.write(f"K-mer Size: {optimal_kmer_length}\n")
         output_file.write(f"Number of Unique K-mers: {num_unique_kmers}\n")
         output_file.write(f"Estimated Genome Size: {estimated_genome_size}\n")
             
