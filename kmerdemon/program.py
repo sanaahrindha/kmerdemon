@@ -121,7 +121,7 @@ def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
     i = 1
     j = 2
     decreased = 0
-    while decreased < 2:
+    while decreased < 1:
         if num_kmers[i]<num_kmers[j]:
             decreased += 1
         else:
