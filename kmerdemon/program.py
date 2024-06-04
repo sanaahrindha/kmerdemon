@@ -31,6 +31,7 @@ def parse_fastq(file_path, out_file): #parse a fastq file and return the number 
                 file2.write(line[:])
                 num_reads += 1
                 read_length = len(line)
+            i += 1
     return num_reads, read_length
 
 def parse_fastq_2(file1, file2, out_file): #parse a fastq file and return the number of reads and write reads to output file
