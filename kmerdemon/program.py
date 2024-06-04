@@ -262,6 +262,7 @@ def predict_best_k(histograms):
         for value in histogram.values():
             if value > 5:
                 num_unique_kmers += 1
+        print(num_unique_kmers)
         if num_unique_kmers > max_unique_kmers:
             max_unique_kmers = num_unique_kmers
             optimal_kmer_length, optimal_distribution = kmer_size, histogram
