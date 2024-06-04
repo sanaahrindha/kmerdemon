@@ -342,14 +342,14 @@ def main():
     #num_unique_kmers = len(kmer_frequencies_by_size[optimal_kmer_length])
     best_distribution = kmer_frequencies_by_size[optimal_kmer_length]
 
-    if increment != 1:
+    '''if increment != 1:
         kmer_frequencies_by_size_better = {}
         for kmer_size in range(optimal_kmer_length-5, optimal_kmer_length+5, 2):
             kmer_frequencies_by_size_better[kmer_size] = abundance(sample,kmer_size)
         optimal_kmer_length, num_unique_kmers = predict_best_k(kmer_frequencies_by_size_better)
         #num_unique_kmers = len(kmer_frequencies_by_size_better[optimal_kmer_length])
         best_distribution = kmer_frequencies_by_size_better[optimal_kmer_length]
-
+'''
     #estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length,best_distribution)
     estimated_genome_size = 0
     output_file = f"{output_prefix}_kmer_{optimal_kmer_length}.txt"
