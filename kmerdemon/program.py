@@ -26,7 +26,7 @@ def parse_fastq(file_path, out_file): #parse a fastq file and return the number 
         lines = file1.readlines()
         i = 0
         for line in lines:
-            if i%4 == 2:
+            if i%4 == 1:
             #if line.startswith('@'):
                 file2.write(line[:])
                 print(line)
