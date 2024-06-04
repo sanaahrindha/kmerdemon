@@ -93,7 +93,7 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
                 kmer_frequencies[kmer] += 1
     return kmer_frequencies
 
-def estimate_genome_size(num_unique_kmers, kmer_size):
+def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
     """
     Estimates genome size based on optimal number of unique kmers
 
@@ -113,7 +113,41 @@ def estimate_genome_size(num_unique_kmers, kmer_size):
     estimated_genome_size : int
         estimated genome size
     """ 
-    estimated_genome_size = num_unique_kmers * kmer_size
+    num_kmers = {}
+    for value in distribution.values():
+        if value not in num_kmers:
+            num_kmers[value] = 1
+        else:
+            num_kmers[value] += 1
+    num_total_kmers = 0
+    valley = 0
+    i = 1
+    j = 2
+    decreased = 0
+    while decreased < 2:
+        if num_kmers[i]<num_kmers[j]:
+            decreased += 1
+        else:
+            decreased = 0
+        i += 1
+        j += 1
+    valley = i
+    est_m = 0
+    j = valley + 1
+    decreased = 0
+    while decreased < 10:
+        if num_kmers[i]>num_kmers[j]:
+            decreased += 1
+        else:
+            decreased = 0
+        i += 1
+        j += 1
+    est_m = i
+    for key in num_kmers.keys():
+        if num_kmers[key] >= valley:
+            num_total_kmers += key*num_kmers[key]
+    #estimated_genome_size = num_unique_kmers * kmer_size
+    estimated_genome_size = num_total_kmers/est_m
     return estimated_genome_size
 
 
@@ -243,6 +277,7 @@ def main():
         kmer_frequencies_by_size[kmer_size] = abundance(output_file,sampling_proportion,kmer_size)
     optimal_kmer_length = predict_best_k(kmer_frequencies_by_size)
     num_unique_kmers = len(kmer_frequencies_by_size[optimal_kmer_length])
+    best_distribution = kmer_frequencies_by_size[optimal_kmer_length]
 
     if increment != 1:
         kmer_frequencies_by_size_better = {}
@@ -250,8 +285,9 @@ def main():
             kmer_frequencies_by_size_better[kmer_size] = abundance(output_file,sampling_proportion,kmer_size)
         optimal_kmer_length = predict_best_k(kmer_frequencies_by_size_better)
         num_unique_kmers = len(kmer_frequencies_by_size_better[optimal_kmer_length])
+        best_distribution = kmer_frequencies_by_size_better[optimal_kmer_length]
 
-    estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length)
+    estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length,best_distribution)
     output_file = f"{output_prefix}_kmer_{kmer_size}.txt"
     with open(output_file, 'w') as output_file:
         output_file.write(f"K-mer Size: {kmer_size}\n")
