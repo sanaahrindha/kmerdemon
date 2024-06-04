@@ -31,6 +31,39 @@ def parse_fastq(file_path, out_file): #parse a fastq file and return the number 
                 read_length = len(line)
     return num_reads, read_length
 
+def parse_fastq_2(file1, file2, out_file): #parse a fastq file and return the number of reads and write reads to output file
+    """
+    Parse the two input file to make it readable for the program
+
+    Parameters
+    ----------
+    file1 : path
+        path to the first input fastq file
+
+    file2 : path
+        path to the second input fastq file
+
+    out_file : path
+        path to the output file used in by the program
+
+    Returns
+    -------
+    num_reads : int
+        number of reads counted in input file
+    """
+    files = [file1,file2]
+    with open(out_file, "w") as out:
+        for file in files:
+            with open(file, 'r') as in_file:
+                num_reads = 0
+                lines = in_file.readlines()
+                for line in lines:
+                    if line.startswith('@'):
+                        out.write(line[1:])
+                        num_reads += 1
+                        read_length = len(line)
+    return num_reads, read_length
+
 def make_kmers(read, kmer_size):
     """
     Make a list of kmers from an input read
@@ -254,13 +287,23 @@ def main():
         parser.error("Requires 1 or 2 input files")
 
     num_reads = 0
-    for file_path in files:
-        if not os.path.exists(file_path):
+    if len(files) == 1:
+        if not os.path.exists(files[0]):
             parser.error("File does not exist")
-        file_name = os.path.basename(file_path)
+        file_name = os.path.basename(files[0])
         file_prefix, _ = os.path.splitext(file_name)
         output_file = f"{file_prefix}_parsed.txt"
-        num_reads, read_length = parse_fastq(file_path, output_file)
+        num_reads, read_length = parse_fastq(files[0], output_file)
+        
+    else:
+        if not os.path.exists(files[0]):
+            parser.error("File" + files[0] +  "does not exist")
+        if not os.path.exists(files[1]):
+            parser.error("File" + files[1] +  "does not exist")
+        file_name = os.path.basename(files[0])
+        file_prefix, _ = os.path.splitext(file_name)
+        output_file = f"{file_prefix}_parsed.txt"
+        num_reads, read_length = parse_fastq_2(files[0], files[1], output_file)
 
     increment = int((max_kmer_size - min_kmer_size)/10)
     if increment == 0:
