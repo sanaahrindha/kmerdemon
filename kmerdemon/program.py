@@ -332,8 +332,9 @@ def main():
         num_unique_kmers = len(kmer_frequencies_by_size_better[optimal_kmer_length])
         best_distribution = kmer_frequencies_by_size_better[optimal_kmer_length]
 
-    estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length,best_distribution)
-    output_file = f"{output_prefix}_kmer_{kmer_size}.txt"
+    #estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length,best_distribution)
+    estimated_genome_size = 0
+    output_file = f"{output_prefix}_kmer_{optimal_kmer_length}.txt"
     with open(output_file, 'w') as output_file:
         output_file.write(f"K-mer Size: {optimal_kmer_length}\n")
         output_file.write(f"Number of Unique K-mers: {num_unique_kmers}\n")
