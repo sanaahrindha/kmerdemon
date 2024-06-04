@@ -24,7 +24,7 @@ def parse_fastq(file_path, out_file): #parse a fastq file and return the number 
     with open(file_path, 'r') as file1, open(out_file, "w") as file2:
         num_reads = 0
         lines = file1.readlines()
-        i = 1
+        i = 0
         for line in lines:
             if i%4 == 2:
             #if line.startswith('@'):
