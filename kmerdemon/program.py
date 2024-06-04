@@ -347,7 +347,7 @@ def main():
 
     for kmer_size in range(min_kmer_size, max_kmer_size, increment):
         kmer_frequencies_by_size[kmer_size] = abundance(sample,kmer_size)
-        create_histogram(kmer_frequencies_by_size[kmer_size], optimal_kmer_length)
+        create_histogram(kmer_frequencies_by_size[kmer_size], kmer_size)
     optimal_kmer_length, num_unique_kmers = predict_best_k(kmer_frequencies_by_size)
     #num_unique_kmers = len(kmer_frequencies_by_size[optimal_kmer_length])
     best_distribution = kmer_frequencies_by_size[optimal_kmer_length]
