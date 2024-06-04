@@ -23,9 +23,9 @@ def parse_fastq(file_path, out_file): #parse a fastq file and return the number 
     """
     with open(file_path, 'r') as file1, open(out_file, "w") as file2:
         num_reads = 0
-        lines = file1.readlines()
+        #lines = file1.readlines()
         i = 0
-        for line in lines:
+        for line in file1:
             if i%4 == 1:
             #if line.startswith('@'):
                 file2.write(line[:])
@@ -60,9 +60,9 @@ def parse_fastq_2(file1, file2, out_file): #parse a fastq file and return the nu
         for file in files:
             with open(file, 'r') as in_file:
                 num_reads = 0
-                lines = in_file.readlines()
+                #lines = in_file.readlines()
                 i = 0
-                for line in lines:
+                for line in in_file:
                     if i%4 == 1:
                         out.write(line[1:])
                         num_reads += 1
@@ -117,8 +117,8 @@ def abundance(parsed_file, threshold, size): #given parsed file from parse_fastq
     reads = []
     kmer_frequencies = {}
     with open(parsed_file, "r") as file1:
-        lines = file1.readlines()
-        for line in lines:
+        #lines = file1.readlines()
+        for line in file1:
             rand = random.random()
             if rand < threshold:
                 reads.append(line.strip()) 
