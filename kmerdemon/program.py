@@ -116,6 +116,8 @@ def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
     num_kmers = defaultdict(int)
     for value in distribution.values():
         num_kmers[value] += 1
+    print(num_kmers)
+    '''
     num_total_kmers = 0
     valley = 0
     i = 1
@@ -143,8 +145,9 @@ def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
     for key in num_kmers.keys():
         if num_kmers[key] >= valley:
             num_total_kmers += key*num_kmers[key]
-    #estimated_genome_size = num_unique_kmers * kmer_size
-    estimated_genome_size = num_total_kmers/est_m
+            '''
+    estimated_genome_size = num_unique_kmers * kmer_size
+    #estimated_genome_size = num_total_kmers/est_m
     return estimated_genome_size
 
 
