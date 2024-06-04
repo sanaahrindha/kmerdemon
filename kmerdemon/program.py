@@ -61,11 +61,13 @@ def parse_fastq_2(file1, file2, out_file): #parse a fastq file and return the nu
             with open(file, 'r') as in_file:
                 num_reads = 0
                 lines = in_file.readlines()
+                i = 0
                 for line in lines:
-                    if line.startswith('@'):
+                    if i%4 == 1:
                         out.write(line[1:])
                         num_reads += 1
                         read_length = len(line)
+                    i += 1
     return num_reads, read_length
 
 def make_kmers(read, kmer_size):
