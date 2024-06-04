@@ -1,0 +1,11 @@
+*.png
+shortfrag_1.fq
+shortfrag_1_parsed.txt
+shortfrag_2.fq
+new_test.txt
+new_test_parsed.txt
+output.txt
+output_kmer_85.txt
+output_kmer_88.txt
+editing.py
+covert_testing.py
