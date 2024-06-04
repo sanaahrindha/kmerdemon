@@ -266,7 +266,7 @@ def predict_best_k(histograms):
         if num_unique_kmers > max_unique_kmers:
             max_unique_kmers = num_unique_kmers
             optimal_kmer_length, optimal_distribution = kmer_size, histogram
-    return optimal_kmer_length
+    return optimal_kmer_length, num_unique_kmers
 
 
 def main():
@@ -338,16 +338,16 @@ def main():
 
     for kmer_size in range(min_kmer_size, max_kmer_size, increment):
         kmer_frequencies_by_size[kmer_size] = abundance(sample,kmer_size)
-    optimal_kmer_length = predict_best_k(kmer_frequencies_by_size)
-    num_unique_kmers = len(kmer_frequencies_by_size[optimal_kmer_length])
+    optimal_kmer_length, num_unique_kmers = predict_best_k(kmer_frequencies_by_size)
+    #num_unique_kmers = len(kmer_frequencies_by_size[optimal_kmer_length])
     best_distribution = kmer_frequencies_by_size[optimal_kmer_length]
 
     if increment != 1:
         kmer_frequencies_by_size_better = {}
         for kmer_size in range(optimal_kmer_length-5, optimal_kmer_length+5, 2):
             kmer_frequencies_by_size_better[kmer_size] = abundance(sample,kmer_size)
-        optimal_kmer_length = predict_best_k(kmer_frequencies_by_size_better)
-        num_unique_kmers = len(kmer_frequencies_by_size_better[optimal_kmer_length])
+        optimal_kmer_length, num_unique_kmers = predict_best_k(kmer_frequencies_by_size_better)
+        #num_unique_kmers = len(kmer_frequencies_by_size_better[optimal_kmer_length])
         best_distribution = kmer_frequencies_by_size_better[optimal_kmer_length]
 
     #estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length,best_distribution)
