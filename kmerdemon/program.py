@@ -193,7 +193,7 @@ def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
     for key in num_kmers.keys():
         #if num_kmers[key] >= 1:
         num_total_kmers += key*num_kmers[key]
-    est_max = max(num_total_kmers, key=num_total_kmers.get)
+    est_max = max(num_kmers, key=num_kmers.get)
     print(num_total_kmers)
     print(est_max)
     estimated_genome_size = num_total_kmers/est_max
