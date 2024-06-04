@@ -340,7 +340,7 @@ def main():
     if increment != 1:
         kmer_frequencies_by_size_better = {}
         for kmer_size in range(optimal_kmer_length-5, optimal_kmer_length+5, 2):
-            kmer_frequencies_by_size_better[kmer_size] = abundance(output_file,sampling_proportion,kmer_size)
+            kmer_frequencies_by_size_better[kmer_size] = abundance(sample,kmer_size)
         optimal_kmer_length = predict_best_k(kmer_frequencies_by_size_better)
         num_unique_kmers = len(kmer_frequencies_by_size_better[optimal_kmer_length])
         best_distribution = kmer_frequencies_by_size_better[optimal_kmer_length]
