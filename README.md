@@ -28,6 +28,12 @@ cd kmerdemon
 pip install -r requirements.txt
 pip install . # For user installation, add --user
 ```
+### For Windows Users(Powershell):
+After following commands above, you will be prompted with a warning with a filepath to where the executable has been downloaded. Use command below in order to copy executable to the working directory.
+
+```bash
+cp "C:\path\to\your\file\kmerdemon.exe" .\
+```
 
 <a name="usage"></a>
 ## Basic Usage
