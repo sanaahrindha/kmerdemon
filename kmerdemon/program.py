@@ -289,7 +289,7 @@ def main():
 
     #Options
     parser.add_argument("-l","--min_kmer_size", type=int, default=15, help="Minimum k-mer length for analysis", metavar="int", required=False) #optional, default set
-    parser.add_argument("-k","--max_kmer_size", type=int, default=121, help="Maximum k-mer length for analysis", metavar="int", required=False) #optional, default set
+    parser.add_argument("-k","--max_kmer_size", type=int, default=100, help="Maximum k-mer length for analysis", metavar="int", required=False) #optional, default set
     parser.add_argument("-e","--kmer_sampling_proportion", type=float, default=0.01, help="Proportion of k-mers to sample", metavar="float", required=False) #optional, default set
     
     #Parse args
@@ -354,14 +354,6 @@ def main():
     #for key, value in best_distribution.items():
         #print(key, value)
 
-    '''if increment != 1:
-        kmer_frequencies_by_size_better = {}
-        for kmer_size in range(optimal_kmer_length-5, optimal_kmer_length+5, 2):
-            kmer_frequencies_by_size_better[kmer_size] = abundance(sample,kmer_size)
-        optimal_kmer_length, num_unique_kmers = predict_best_k(kmer_frequencies_by_size_better)
-        #num_unique_kmers = len(kmer_frequencies_by_size_better[optimal_kmer_length])
-        best_distribution = kmer_frequencies_by_size_better[optimal_kmer_length]
-'''
     estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length,best_distribution)
     #estimated_genome_size = 0
     output_file = f"{output_prefix}_kmer_{optimal_kmer_length}.txt"
