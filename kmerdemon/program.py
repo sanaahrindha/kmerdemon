@@ -209,15 +209,18 @@ def create_histogram(kmer_counts, k):
     kmer_counts : dictionary
         path to the parsed file
 
-    threshold : float
-        proportion of reads to be sampled
+    k : int
+        kmer size for which the histogram is being plotted
 
     size : int
         kmer size 
     """
-    histogram = defaultdict(int)
+    histogram = {}
     for count in kmer_counts.values():
-        histogram[count] += 1
+        if count in histogram:
+            histogram[count] += 1
+        else:
+            histogram[count] = 1
     plot_histogram(histogram, k)
     
 def plot_histogram(histogram, k):     
