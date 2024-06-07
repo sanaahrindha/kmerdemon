@@ -146,7 +146,6 @@ def estimate_genome_size(distribution):
         num_kmers[value] += 1
     num_total_kmers = 0
     for key in num_kmers.keys():
-        #if num_kmers[key] >= 1:
         num_total_kmers += key*num_kmers[key]
     est_max = max(num_kmers, key=num_kmers.get)
     estimated_genome_size = num_total_kmers/est_max
@@ -223,6 +222,7 @@ def predict_best_k(histograms):
     """    
     max_unique_kmers = 0
     num_unique_kmers = 0
+    optimal_kmer_length = 0
     for kmer_size, histogram in histograms.items():
         for value in histogram.values():
             if value > 1:
@@ -312,6 +312,7 @@ def main():
     optimal_kmer_length, num_unique_kmers = predict_best_k(kmer_frequencies_by_size)
     best_distribution = kmer_frequencies_by_size[optimal_kmer_length]
 
+    # estimate genome and write output to out file
     estimated_genome_size = estimate_genome_size(best_distribution)
     output_file = f"{output_prefix}_kmer_{optimal_kmer_length}.txt"
     with open(output_file, 'w') as output_file:
