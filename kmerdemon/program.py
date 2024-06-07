@@ -54,6 +54,9 @@ def parse_fastq_2(file1, file2, out_file): #parse a fastq file and return the nu
     -------
     num_reads : int
         number of reads counted in input file
+
+    read_length : int
+        length of the reads
     """
     files = [file1,file2]
     with open(out_file, "w") as out:
@@ -103,9 +106,6 @@ def abundance(reads, size): #given parsed file from parse_fastq() create subset 
     parsed_file : path
         path to the parsed file
 
-    threshold : float
-        proportion of reads to be sampled
-
     size : int
         kmer size 
 
@@ -114,15 +114,6 @@ def abundance(reads, size): #given parsed file from parse_fastq() create subset 
     kmer_frequences : dictionary
         kmer strings as keys and counts of kmers as values
     """
-    '''reads = []
-    
-    with open(parsed_file, "r") as file1:
-        #lines = file1.readlines()
-        for line in file1:
-            rand = random.random()
-            if rand < threshold:
-                reads.append(line.strip()) 
-                '''
     kmer_frequencies = {}
     for read in reads:
         #if (len(read)<size):
@@ -136,20 +127,14 @@ def abundance(reads, size): #given parsed file from parse_fastq() create subset 
                     kmer_frequencies[kmer] += 1
     return kmer_frequencies
 
-def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
+def estimate_genome_size(distribution):
     """
     Estimates genome size based on optimal number of unique kmers
 
     Parameters
     ----------
-    num_unique_kmers : int
-        maximum number of unique kmers
-
-    kmer_size : int
-        size of kmer
-
-    coverage : int
-        coverage of reads 
+    distribution : dictionary
+        optimized k-mer dictionary with k-mers as keys and frequencies as values
 
     Returns
     -------
@@ -159,43 +144,11 @@ def estimate_genome_size(num_unique_kmers, kmer_size, distribution):
     num_kmers = defaultdict(int)
     for value in distribution.values():
         num_kmers[value] += 1
-        '''
-    num_total_kmers = 0
-    valley = 0
-    i = 1
-    j = 2
-    decreased = 0
-    while decreased < 1:
-        if num_kmers[i]<num_kmers[j]:
-            decreased += 1
-        else:
-            decreased = 0
-        i += 1
-        j += 1
-    valley = i
-    est_m = 0
-    j = valley + 1
-    decreased = 0
-    while decreased < 10:
-        if num_kmers[i]>num_kmers[j]:
-            decreased += 1
-        else:
-            decreased = 0
-        i += 1
-        j += 1
-    est_m = i
-    for key in num_kmers.keys():
-        if num_kmers[key] >= valley:
-            num_total_kmers += key*num_kmers[key]
-    #estimated_genome_size = num_unique_kmers * kmer_size
-    '''
     num_total_kmers = 0
     for key in num_kmers.keys():
         #if num_kmers[key] >= 1:
         num_total_kmers += key*num_kmers[key]
     est_max = max(num_kmers, key=num_kmers.get)
-    #print(num_total_kmers)
-    #print(est_max)
     estimated_genome_size = num_total_kmers/est_max
     return estimated_genome_size
 
@@ -236,7 +189,7 @@ def plot_histogram(histogram, k):
     k : int
         kmer size for which the histogram is being plotted
 
-    Outputs
+    Returns
     -------
     Graph : plt
         creates the histogram with all required elements and saves it
@@ -304,6 +257,7 @@ def main():
     sampling_proportion = args.kmer_sampling_proportion
     output_prefix = args.out
 
+    # error handling
     if min_kmer_size < 5:
         parser.error("Minimum k-mer size cannot be less than 5")
 
@@ -313,6 +267,7 @@ def main():
     if len(files) == 0 or len(files) > 2:
         parser.error("Requires 1 or 2 input files")
 
+    # parse files
     num_reads = 0
     if len(files) == 1:
         if not os.path.exists(files[0]):
@@ -321,7 +276,8 @@ def main():
         file_prefix, _ = os.path.splitext(file_name)
         output_file = f"{file_prefix}_parsed.txt"
         num_reads, read_length = parse_fastq(files[0], output_file)
-        
+    
+    # parsing for 2 files
     else:
         if not os.path.exists(files[0]):
             parser.error("File" + files[0] +  "does not exist")
@@ -341,6 +297,7 @@ def main():
     num_unique_kmers = 0
     optimal_kmer_length = -1
 
+    # get sample of reads
     with open(output_file, "r") as f:
         sample = []
         for line in f:
@@ -348,17 +305,14 @@ def main():
             if rand <= sampling_proportion:
                 sample.append(line)
 
+    # k-mer abundance analysis for different k-mer lengths
     for kmer_size in range(min_kmer_size, max_kmer_size, increment):
         kmer_frequencies_by_size[kmer_size] = abundance(sample,kmer_size)
         create_histogram(kmer_frequencies_by_size[kmer_size], kmer_size)
     optimal_kmer_length, num_unique_kmers = predict_best_k(kmer_frequencies_by_size)
-    #num_unique_kmers = len(kmer_frequencies_by_size[optimal_kmer_length])
     best_distribution = kmer_frequencies_by_size[optimal_kmer_length]
-    #for key, value in best_distribution.items():
-        #print(key, value)
 
-    estimated_genome_size = estimate_genome_size(num_unique_kmers,read_length,best_distribution)
-    #estimated_genome_size = 0
+    estimated_genome_size = estimate_genome_size(best_distribution)
     output_file = f"{output_prefix}_kmer_{optimal_kmer_length}.txt"
     with open(output_file, 'w') as output_file:
         output_file.write(f"K-mer Size: {optimal_kmer_length}\n")
@@ -369,6 +323,4 @@ def main():
 if __name__ == "__main__":
     main()
     
-
-#python kmer_estimator.py input1.fastq input2.fastq --min_kmer_size 15 --max_kmer_size 120 --output_prefix myoutput
 
