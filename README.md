@@ -61,4 +61,6 @@ options:
 ## Testing
 A small test file is located the folder tests, to run the test, use the command kmerdemon tests/test.txt
 
-
+<a name="issues"></a>
+## Issues
+While using our program, if any bugs or problems arise please report them under the Issues tab located in our repository. We will try to address them in a promptly manner.
